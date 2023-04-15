@@ -7,6 +7,7 @@ def test_yandex_text_search(yandex_page):
     3) Checking that search give us result.
     4) Checking that first link in result list is required page.
     """
+    yandex_page.switch_windows(0)
     search_field = yandex_page.get_search_field()    # 1) First Test-case
     assert search_field is not None
     yandex_page.enter_word(search_field, "Тензор")   # 2) Second Test-case
