@@ -1,8 +1,14 @@
 import pytest
 from selenium import webdriver
 
+from yandex_pages import SearchHelper
+
+
 @pytest.fixture(scope="session")
-def browser():
+def yandex_page():
     driver = webdriver.Firefox()
-    yield driver
+    driver.implicitly_wait(5)
+    main_page = SearchHelper(driver)
+    main_page.go_to_site()
+    yield main_page
     driver.quit()

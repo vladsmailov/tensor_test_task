@@ -1,7 +1,7 @@
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.wait import WebDriverWait
 
 
 class BasePage:
@@ -29,9 +29,6 @@ class BasePage:
         window = self.driver.window_handles[number]
         return self.driver.switch_to.window(window)
 
-    def refresh_page(self):
-        self.driver.refresh()
-
     def select_all_text(self):
         ActionChains(self.driver) \
             .key_down(Keys.CONTROL) \
@@ -44,4 +41,9 @@ class BasePage:
             .key_down(Keys.CONTROL) \
             .send_keys('c') \
             .key_up(Keys.CONTROL) \
+            .perform()
+
+    def press_escape(self):
+        ActionChains(self.driver).\
+            send_keys(Keys.ESCAPE)\
             .perform()

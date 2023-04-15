@@ -1,41 +1,19 @@
-from YandexPages import SearchHelper
+def test_yandex_text_search(yandex_page):
+    """
+    Yandex search field text test.
 
-
-def test_yandex_search_field_existing(browser):
-    """Search field existing check."""
-    yandex_main_page = SearchHelper(browser)
-    yandex_main_page.go_to_site()
-    search_field = yandex_main_page.check_search_field()
+    1) Checking existing of searching field.
+    2) Checking existing of suggestions in searching field.
+    3) Checking that search give us result.
+    4) Checking that first link in result list is required page.
+    """
+    search_field = yandex_page.get_search_field()    # 1) First Test-case
     assert search_field is not None
-
-
-def test_yandex_search_suggestions(browser):
-    """Check suggestions."""
-    yandex_main_page = SearchHelper(browser)
-    yandex_main_page.go_to_site()
-    search_field = yandex_main_page.check_search_field()
-    yandex_main_page.enter_word(search_field, "Тензор")
-    suggestions = yandex_main_page.check_suggestions()
+    yandex_page.enter_word(search_field, "Тензор")   # 2) Second Test-case
+    suggestions = yandex_page.get_suggestions()
     assert suggestions is not None
-
-
-def test_yandex_search_result(browser):
-    """Checking that the results page is not empty."""
-    yandex_main_page = SearchHelper(browser)
-    yandex_main_page.go_to_site()
-    search_field = yandex_main_page.check_search_field()
-    yandex_main_page.enter_word(search_field, "Тензор")
-    yandex_main_page.press_return_button(search_field)
-    results = yandex_main_page.get_page_source()
+    yandex_page.press_return_button(search_field)    # 3) Third Test-case
+    results = yandex_page.get_page_source()
     assert results > 0
-
-
-def test_first_link(browser):
-    """Check first link."""
-    yandex_main_page = SearchHelper(browser)
-    yandex_main_page.go_to_site()
-    search_field = yandex_main_page.check_search_field()
-    yandex_main_page.enter_word(search_field, "Тензор")
-    yandex_main_page.press_return_button(search_field)
-    first_link = yandex_main_page.check_first_link()
+    first_link = yandex_page.get_first_link()        # 4) Fourth Test-case
     assert "https://tensor.ru/" in first_link
