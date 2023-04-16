@@ -1,7 +1,3 @@
-import time
-import tkinter as tk
-
-
 def test_yandex_image_search_image_return(yandex_page):
     """
     Yandex search field image test.
@@ -30,32 +26,24 @@ def test_yandex_image_search_image_return(yandex_page):
     images_button = yandex_page.get_images_button(scrollbar)
     yandex_page.click_on(images_button)
     yandex_page.switch_windows(-1)
-    time.sleep(3)
     url = yandex_page.get_url()
     assert url == 'https://yandex.ru/images/'
     # 3) Third Test-case
     first_popular_images_category = \
         yandex_page.get_first_popular_images_category()
     yandex_page.click_on(first_popular_images_category)
-    time.sleep(3)
     images = yandex_page.get_image_bar()
     first_image = yandex_page.select_first_image(images)
     header = yandex_page.get_images_header()
     search_field = yandex_page.get_images_search_field(header)
-    time.sleep(3)
     yandex_page.click_on(search_field)
     yandex_page.select_all_text()
-    time.sleep(3)
     yandex_page.copy_all_text()
-    time.sleep(3)
-    root = tk.Tk()
-    text = root.clipboard_get()
+    text = yandex_page.get_copied_text()
     assert text is not None
     # 4) Fourth Test-case
-    time.sleep(3)
     yandex_page.press_escape()
     yandex_page.click_on(first_image)
-    time.sleep(3)
     media_viewer = yandex_page.get_media_viewer()
     image = yandex_page.get_image(media_viewer)
     assert image.get_attribute('class') == 'MMImage-Preview'

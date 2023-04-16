@@ -1,4 +1,5 @@
 import sys
+import time
 
 from loguru import logger
 from selenium.webdriver.common.action_chains import ActionChains
@@ -38,7 +39,9 @@ class BasePage:
     @logger.catch
     def go_to_window(self, number):
         window = self.driver.window_handles[number]
-        return self.driver.switch_to.window(window)
+        self.driver.switch_to.window(window)
+        time.sleep(3)
+        return
 
     @logger.catch
     def select_all_text(self):

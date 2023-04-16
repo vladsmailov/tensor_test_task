@@ -1,4 +1,6 @@
 import sys
+import time
+import tkinter as tk
 
 from loguru import logger
 from selenium.webdriver.common.by import By
@@ -48,7 +50,7 @@ class SearchHelper(BasePage):
         """Check search field."""
         logger.info("SEARCH FIELD OBJECT RECIEVED.")
         return self.find_element(
-            YandexSearchLocators.LOCATOR_YANDEX_SEARCH_FIELD, time=3
+            YandexSearchLocators.LOCATOR_YANDEX_SEARCH_FIELD, time=5
         )
 
     @logger.catch
@@ -94,7 +96,7 @@ class SearchHelper(BasePage):
         """Check the suggestion."""
         logger.info("SUGGESTIONS IN SEARCH FIELD RECIEVED.")
         return self.find_element(
-            YandexSearchLocators.LOCATOR_YANDEX_SUGGESTIONS, time=10
+            YandexSearchLocators.LOCATOR_YANDEX_SUGGESTIONS, time=30
         )
 
     @logger.catch
@@ -149,10 +151,13 @@ class SearchHelper(BasePage):
         )
 
     @staticmethod
+    @logger.catch
     def click_on(element):
         """Click on object."""
         logger.info("MOUSE LEFT CLICK.")
-        return element.click()
+        time.sleep(3)
+        element.click()
+        return
 
     @logger.catch
     def switch_windows(self, number):
@@ -213,3 +218,9 @@ class SearchHelper(BasePage):
         """Get url of current page."""
         logger.info(f"CURRENT URL RECIEVED: {self.driver.current_url}.")
         return self.driver.current_url
+
+    @logger.catch
+    def get_copied_text(self):
+        """Return text from clipboard."""
+        root = tk.Tk()
+        return root.clipboard_get()
